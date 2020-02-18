@@ -2,8 +2,15 @@
 
 cd "$(dirname "$0")/../"
 
-BUMP=${1:-minor}
+PRERELEASE=${1:-dev}
 
-./bin/build
+npm run build
 git status
-npx release-it --ci -i $BUMP
+
+if [ "$PRERELEASE" == "prod" ]; then
+  npx release-it minor --ci
+elif [ "$PRERELEASE" == "dev" ]; then
+  npx release-it patch --ci
+else
+  npx release-it patch --ci --preRelease=$PRERELEASE
+fi
