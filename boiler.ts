@@ -47,13 +47,11 @@ export const installBoiler: InstallBoiler = async ({
     source: ["release-it", "semver"],
   })
 
-  if (answers.private) {
-    actions.push({
-      action: "merge",
-      path: join(destDir, "package.json"),
-      source: { private: true },
-    })
-  }
+  actions.push({
+    action: "merge",
+    path: join(destDir, "package.json"),
+    source: { private: answers.private },
+  })
 
   return actions
 }
