@@ -1,7 +1,7 @@
 import { join } from "path"
-import { InstallBoiler, PromptBoiler } from "boiler-dev"
+import { GenerateBoiler, PromptBoiler } from "boiler-dev"
 
-export const promptBoiler: PromptBoiler = async () => {
+export const prompt: PromptBoiler = async () => {
   return [
     {
       type: "confirm",
@@ -12,10 +12,10 @@ export const promptBoiler: PromptBoiler = async () => {
   ]
 }
 
-export const installBoiler: InstallBoiler = async ({
+export const generate: GenerateBoiler = async ({
   answers,
-  destDir,
   files,
+  rootDirPath,
 }) => {
   const actions = []
 
@@ -35,7 +35,7 @@ export const installBoiler: InstallBoiler = async ({
       actions.push({
         action: "write",
         bin: true,
-        path: join(destDir, "bin/release"),
+        path: join(rootDirPath, "bin/release"),
         source,
       })
     }
@@ -49,7 +49,7 @@ export const installBoiler: InstallBoiler = async ({
 
   actions.push({
     action: "merge",
-    path: join(destDir, "package.json"),
+    path: join(rootDirPath, "package.json"),
     source: { private: answers.private },
   })
 
