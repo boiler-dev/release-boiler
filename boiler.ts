@@ -15,7 +15,7 @@ export const prompt: PromptBoiler = async () => {
 export const generate: GenerateBoiler = async ({
   answers,
   files,
-  rootDirPath,
+  cwdPath,
 }) => {
   const actions = []
 
@@ -35,7 +35,7 @@ export const generate: GenerateBoiler = async ({
       actions.push({
         action: "write",
         bin: true,
-        path: join(rootDirPath, "bin/release"),
+        path: join(cwdPath, "bin/release"),
         source,
       })
     }
@@ -49,7 +49,7 @@ export const generate: GenerateBoiler = async ({
 
   actions.push({
     action: "merge",
-    path: join(rootDirPath, "package.json"),
+    path: join(cwdPath, "package.json"),
     source: { private: answers.private },
   })
 
