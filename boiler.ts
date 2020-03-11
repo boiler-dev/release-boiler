@@ -32,7 +32,7 @@ export const generate: ActionBoiler = async ({
     action: "write",
     bin: true,
     path: "bin/release",
-    source: "release",
+    sourcePath: "release",
     modify: (src: string) => {
       if (answers.private) {
         src = src.replace(/--ci/gm, "--ci --no-npm.publish")
