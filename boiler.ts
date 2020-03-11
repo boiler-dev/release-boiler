@@ -1,4 +1,3 @@
-import { join } from "path"
 import { ActionBoiler, PromptBoiler } from "boiler-dev"
 
 export const prompt: PromptBoiler = async () => {
@@ -26,36 +25,25 @@ export const install: ActionBoiler = async () => {
 
 export const generate: ActionBoiler = async ({
   answers,
-  files,
-  cwdPath,
 }) => {
   const actions = []
 
-  for (const file of files) {
-    const { name } = file
-
-    if (name === "release") {
-      let { source } = file
-
+  actions.push({
+    action: "write",
+    bin: true,
+    path: "bin/release",
+    source: "release",
+    modify: (src: string) => {
       if (answers.private) {
-        source = source.replace(
-          /--ci/gm,
-          "--ci --no-npm.publish"
-        )
+        src = src.replace(/--ci/gm, "--ci --no-npm.publish")
       }
-
-      actions.push({
-        action: "write",
-        bin: true,
-        path: join(cwdPath, "bin/release"),
-        source,
-      })
-    }
-  }
+      return src
+    },
+  })
 
   actions.push({
     action: "merge",
-    path: join(cwdPath, "package.json"),
+    path: "package.json",
     source: { private: answers.private },
   })
 
