@@ -46,7 +46,9 @@ export const generate: ActionBoiler = async ({
     path: "package.json",
     source: {
       private: answers.private,
-      release: "./bin/release",
+      scripts: {
+        release: "./bin/release",
+      },
     },
   })
 
