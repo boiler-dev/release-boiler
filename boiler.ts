@@ -44,7 +44,10 @@ export const generate: ActionBoiler = async ({
   actions.push({
     action: "merge",
     path: "package.json",
-    source: { private: answers.private },
+    source: {
+      private: answers.private,
+      release: "./bin/release",
+    },
   })
 
   return actions
